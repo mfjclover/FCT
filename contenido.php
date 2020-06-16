@@ -12,7 +12,7 @@ function ver($nameFile)
     }
     elseif(substr($nameFile, -4) == ".png" or substr($nameFile, -5) == ".jpeg")
     {
-        return "<a href='ver_foto.php?foto=$nameFile'></a>";
+        return "<a href='ver_foto.php?foto=$nameFile'>Ver</a>";
     }
 }
 $directorio_usuario = opendir("./directorio_fichero/" . $s_usuario);
