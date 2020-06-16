@@ -4,6 +4,17 @@ if (isset($_SESSION['s_usuario'])){
     $s_usuario=$_SESSION["s_usuario"];
     echo "Hola $s_usuario" . "<br> <br>";
 }
+function ver($nameFile)
+{
+    if(substr($nameFile, -4) == ".txt")
+    {
+        return "<a href='ver_texto.php?texto=$nameFile'>Ver</a>";
+    }
+    elseif(substr($nameFile, -4) == ".png" or substr($nameFile, -5) == ".jpeg")
+    {
+        return "<a href='ver_foto.php?foto=$nameFile'></a>";
+    }
+}
 $directorio_usuario = opendir("./directorio_fichero/" . $s_usuario);
 echo "<table>";
     echo "<tr>";
@@ -15,10 +26,10 @@ echo "<table>";
     while(($nombreFichero = readdir($directorio_usuario)) != FALSE)
     {
         if($nombreFichero != "." && $nombreFichero != "..")
-        {           
+        {
             echo "<tr>";
             echo "<td>$nombreFichero</td>";
-            echo "<th>Ver</th>";
+            echo "<th>" . ver($nombreFichero) . "</th>";
             echo "<th>Editar</th>";
             echo "<th>Borrar</th>";
             echo "</tr>";
