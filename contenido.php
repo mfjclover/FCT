@@ -31,7 +31,7 @@ echo "<table>";
             echo "<td>$nombreFichero</td>";
             echo "<th>" . ver($nombreFichero) . "</th>";
             echo "<th>Editar</th>";
-            echo "<th>Borrar</th>";
+            echo "<th><a href='borrar_fichero.php?borrar_fichero=$nombreFichero'>Borrar</a></th>";
             echo "</tr>";
         }
     }
