@@ -15,6 +15,13 @@ function ver($nameFile)
         return "<a href='ver_foto.php?foto=$nameFile'>Ver</a>";
     }
 }
+function editar($nameFile)
+{
+    if(substr($nameFile, -4) == ".txt")
+    {
+        return "<a href='editar_texto.php?texto=$nameFile'>Editar</a>";
+    }
+}
 $directorio_usuario = opendir("./directorio_fichero/" . $s_usuario);
 echo "<table>";
     echo "<tr>";
@@ -30,7 +37,7 @@ echo "<table>";
             echo "<tr>";
             echo "<td>$nombreFichero</td>";
             echo "<th>" . ver($nombreFichero) . "</th>";
-            echo "<th>Editar</th>";
+            echo "<th>" . editar($nombreFichero) . "</th>";
             echo "<th><a href='borrar_fichero.php?borrar_fichero=$nombreFichero'>Borrar</a></th>";
             echo "</tr>";
         }
