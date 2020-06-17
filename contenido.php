@@ -4,8 +4,8 @@ if (isset($_SESSION['s_usuario'])){
     $s_usuario=$_SESSION["s_usuario"];
     echo "Hola $s_usuario" . "<br> <br>";
 }
-function ver($nameFile)
-{
+
+function ver($nameFile){
     if(substr($nameFile, -4) == ".txt")
     {
         return "<a href='ver_texto.php?texto=$nameFile'>Ver</a>";
@@ -15,8 +15,7 @@ function ver($nameFile)
         return "<a href='ver_foto.php?foto=$nameFile'>Ver</a>";
     }
 }
-function editar($nameFile)
-{
+function editar($nameFile){
     if(substr($nameFile, -4) == ".txt")
     {
         return "<a href='editar_texto.php?texto=$nameFile'>Editar</a>";

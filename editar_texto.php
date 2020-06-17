@@ -9,7 +9,7 @@ include_once 'function_ver_texto.php';
 echo "<html>";
 echo "<form action='guardar_texto.php' method='POST'>" ;
     echo "<textarea rows='15' cols='30' name='contenido'/>";
-    echo ver_texto($nombreFichero);
+    echo editar_texto($nombreFichero);
     echo "</textarea>";
     echo "<input type='hidden' name='nombre_fichero' value='$nombreFichero'/>" . "<br>";
     echo "<input type='submit' value='Guardar'/>";
