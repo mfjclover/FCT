@@ -44,8 +44,9 @@ echo "<table>";
             echo "<th>" . editar($nombreFichero) . "</th>";
             echo "<th><a href='borrar_fichero.php?borrar_fichero=$nombreFichero'>Borrar</a></th>";
             echo "</tr>";
+            $total_tamañoFichero= $total_tamañoFichero + $tamañoFichero;
         }
-        $total_tamañoFichero= $total_tamañoFichero + $tamañoFichero;
+        
     }
 echo "</table>";
 
