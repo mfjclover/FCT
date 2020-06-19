@@ -5,6 +5,9 @@ if (isset($_SESSION['s_usuario'])){
     $s_usuario=$_SESSION["s_usuario"];
     echo "Hola $s_usuario" . "<br> <br>";
 }
+else {
+    header("Location: error.php");
+}
 
 function ver($nameFile){
     if(substr($nameFile, -4) == ".txt")

@@ -4,7 +4,7 @@ include_once 'iniciar_conexion.php';
 if (isset($_POST['verificar'])){
     $usuario=$_POST['usuario'];
     $password=$_POST['password'];
-    $sqlVerificar = "select password from usuarios where user = '$usuario'";
+    $sqlVerificar = "select password, administrador from usuarios where user = '$usuario'";
     $resultVerificar = mysqli_query($conectar, $sqlVerificar); 
     if(!$resultVerificar)
     {
@@ -14,8 +14,13 @@ if (isset($_POST['verificar'])){
         if (mysqli_num_rows($resultVerificar) == 1){
             $fila = mysqli_fetch_assoc($resultVerificar);
             if(password_verify($_POST['password'], $fila['password'])) {
-            $_SESSION["s_usuario"] = $usuario;
-            header("location: contenido.php");
+                $_SESSION["s_usuario"] = $usuario;
+                if ($fila['administrador'] == True) {
+                    header("location: administrador.php");
+                }
+                else {
+                    header("location: contenido.php");
+                }
             }
             else {
                 echo "Error";
