@@ -33,21 +33,29 @@ echo "<th>Editar</th>";
 echo "<th>Borrar</th>";
 echo "</tr>";
 
-$raiz = "./directorio_fichero/";
+$raiz = "/var/www/FCT/directorio_fichero";
 chdir($raiz);
-if (isset($_GET['directorio_actual'])) {    
+$directorio_actual = getcwd();
+
+if (isset($_GET['entrar_directorio']) & isset($_GET['directorio_actual'])) {
+    $nombre_directorio = $_GET['entrar_directorio'];
     $directorio_actual = $_GET['directorio_actual'];
-    $directorio_anterior = $_GET['directorio_actual'] . "/../";
-//     if ($directorio_anterior == $raiz) {
-//         $directorio_anterior = $raiz;
-//     }
-}
-else {
+    $directorio_actual = $directorio_actual . "/" . $nombre_directorio;
+    chdir($directorio_actual);
     $directorio_actual = getcwd();
+}
+if (isset($_GET['volver_directorio'])) {
+    $directorio_actual = $_GET['volver_directorio'];
+    if ($directorio_actual != $raiz){
+        $directorio_actual = dirname($directorio_actual);
+    }
+    else {
+        echo "Error: Ya no se puedo retroceder, has llegado a la raiz" . "<br>";
+    }
 }
 
 echo "Directorio actual: $directorio_actual" . "<br>";
-echo "Directorio anterior: $directorio_anterior" . "<br>";
+
 $directorio_usuario = opendir($directorio_actual);
 
 while(($nombreFichero = readdir($directorio_usuario)) != FALSE)
@@ -56,25 +64,24 @@ while(($nombreFichero = readdir($directorio_usuario)) != FALSE)
     {        
         echo "<tr>";
         if (is_dir($nombreFichero)){
-            echo "<td> <a href='administrador.php?directorio_actual=$nombreFichero'>$nombreFichero</a> </td>";
+            echo "<td> <a href='administrador.php?entrar_directorio=$nombreFichero&&directorio_actual=$directorio_actual'>$nombreFichero</a> </td>";
         }
         else {
             $tamañoFichero = filesize($directorio_actual . "/" . $nombreFichero) / 1024;
             $tamañoFichero = round($tamañoFichero, 2);
             echo "<td> $nombreFichero </td>";
-            
+            echo "<td> $tamañoFichero kb </td>";
+            echo "<th>" . ver($nombreFichero) . "</th>";
+            echo "<th>" . editar($nombreFichero) . "</th>";
+            echo "<th><a href='borrar_fichero.php?borrar_fichero=$nombreFichero'>Borrar</a></th>";
+            echo "</tr>";
+            $total_tamañoFichero= $total_tamañoFichero + $tamañoFichero;
         }
-        echo "<td> $tamañoFichero kb </td>";
-        echo "<th>" . ver($nombreFichero) . "</th>";
-        echo "<th>" . editar($nombreFichero) . "</th>";
-        echo "<th><a href='borrar_fichero.php?borrar_fichero=$nombreFichero'>Borrar</a></th>";
-        echo "</tr>";
-        $total_tamañoFichero= $total_tamañoFichero + $tamañoFichero;
     }    
 }
 echo "</table>";
 
-echo "<br>" . "<a href='administrador.php?directorio_actual=$directorio_anterior'>Volver</a>" . "<br>";
+echo "<br>" . "<a href='administrador.php?volver_directorio=$directorio_actual'>Volver</a>" . "<br>";
 
 $sql_cuota = "select cuota from usuarios where user = '$s_usuario'";
 $result_sql_cuota = mysqli_query($conectar, $sql_cuota);
@@ -103,16 +110,5 @@ echo "<br>" . "Total: $total_tamañoFichero de $cuota";
            echo "Ha alcanzado el límite de espacio";
         }
         ?>
-    </form>
-<!--     <form action="crear_carpeta.php" method="POST"> -->
-<!--         Iniciar sesión: <br> -->
-<!--         Usuario: <br> -->
-<!--         <input type="text" name="usuario"> <br> -->
-<!--         Contrasena: <br> -->
-<!--         <input type="password" name="password"> <br> -->
-<!--         <input type="submit" value="Entrar" name="verificar"> <br> -->
-<!--         ¿No tienes una cuenta aún? -->
-<!--         <a href="./registrar.php">Registrate</a> -->
-<!--     </form> -->
 </body>
 </html>
